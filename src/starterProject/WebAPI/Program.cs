@@ -2,6 +2,7 @@ using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using Persistence;
 using Application;
+using Infrastructure;
 using Core.Mailing;
 using Core.CrossCuttingConcerns.Logging.Serilog.ConfigurationModels;
 using Core.Security.JWT;
@@ -30,7 +31,7 @@ public class Program
             builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>()
             ?? throw new InvalidOperationException("TokenOptions section cannot found in configuration."));
         builder.Services.AddPersistenceServices(builder.Configuration);
-        // builder.Services.AddInfrastructureServices();
+        builder.Services.AddInfrastructureServices();
         builder.Services.AddHttpContextAccessor();
 
         const string tokenOptionsConfigurationSection = "TokenOptions";
