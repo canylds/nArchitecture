@@ -18,10 +18,10 @@ public class AuthenticatorManager : IAuthenticatorService
     private readonly IOtpAuthenticatorRepository _otpAuthenticatorRepository;
 
     public AuthenticatorManager(IEmailAuthenticatorHelper emailAuthenticatorHelper,
-    IEmailAuthenticatorRepository emailAuthenticatorRepository,
-    IMailService mailService,
-    IOtpAuthenticatorHelper otpAuthenticatorHelper,
-    IOtpAuthenticatorRepository otpAuthenticatorRepository)
+        IEmailAuthenticatorRepository emailAuthenticatorRepository,
+        IMailService mailService,
+        IOtpAuthenticatorHelper otpAuthenticatorHelper,
+        IOtpAuthenticatorRepository otpAuthenticatorRepository)
     {
         _emailAuthenticatorHelper = emailAuthenticatorHelper;
         _emailAuthenticatorRepository = emailAuthenticatorRepository;

@@ -17,10 +17,10 @@ public class AuthManager : IAuthService
     private readonly IMapper _mapper;
 
     public AuthManager(IUserOperationClaimRepository userOperationClaimRepository,
-    IRefreshTokenRepository refreshTokenRepository,
-    ITokenHelper<int, int, int> tokenHelper,
-    IConfiguration configuration,
-    IMapper mapper)
+        IRefreshTokenRepository refreshTokenRepository,
+        ITokenHelper<int, int, int> tokenHelper,
+        IConfiguration configuration,
+        IMapper mapper)
     {
         _userOperationClaimRepository = userOperationClaimRepository;
         _refreshTokenRepository = refreshTokenRepository;
@@ -28,7 +28,7 @@ public class AuthManager : IAuthService
 
         const string tokenOptionsConfigurationSection = "TokenOptions";
         _tokenOptions = configuration.GetSection(tokenOptionsConfigurationSection).Get<TokenOptions>()
-        ?? throw new NullReferenceException($"\"{tokenOptionsConfigurationSection}\" section cannot found in configuration");
+            ?? throw new NullReferenceException($"\"{tokenOptionsConfigurationSection}\" section cannot found in configuration");
 
         _mapper = mapper;
     }
@@ -38,7 +38,7 @@ public class AuthManager : IAuthService
         IList<OperationClaim> operationClaims = await _userOperationClaimRepository.GetOperationClaimsByUserIdAsync(user.Id);
 
         AccessToken accessToken = _tokenHelper.CreateToken(user,
-        operationClaims.Select(oc => (OperationClaim<int>)oc).ToImmutableList());
+            operationClaims.Select(oc => (OperationClaim<int>)oc).ToImmutableList());
 
         return accessToken;
     }
@@ -53,7 +53,7 @@ public class AuthManager : IAuthService
     public async Task DeleteOldRefreshTokens(int userId)
     {
         List<RefreshToken> refreshTokens = await _refreshTokenRepository.GetOldRefreshTokensAsync(userId,
-        _tokenOptions.RefreshTokenTTL);
+            _tokenOptions.RefreshTokenTTL);
 
         await _refreshTokenRepository.DeleteRangeAsync(refreshTokens);
     }
@@ -66,9 +66,9 @@ public class AuthManager : IAuthService
     }
 
     public async Task RevokeRefreshToken(RefreshToken refreshToken,
-    string ipAddress,
-    string? reason = null,
-    string? replacedByToken = null)
+        string ipAddress,
+        string? reason = null,
+        string? replacedByToken = null)
     {
         refreshToken.RevokedDate = DateTime.UtcNow;
         refreshToken.RevokedByIp = ipAddress;

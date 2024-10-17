@@ -44,10 +44,10 @@ public class UserManager : IUserService
     }
 
     public async Task<User?> GetAsync(Expression<Func<User, bool>> predicate,
-    Func<IQueryable<User>, IIncludableQueryable<User, object>>? include = null,
-    bool withDeleted = false,
-    bool enableTracking = true,
-    CancellationToken cancellationToken = default)
+        Func<IQueryable<User>, IIncludableQueryable<User, object>>? include = null,
+        bool withDeleted = false,
+        bool enableTracking = true,
+        CancellationToken cancellationToken = default)
     {
         User? user = await _userRepository.GetAsync(predicate, include, withDeleted, enableTracking, cancellationToken);
 
@@ -55,20 +55,20 @@ public class UserManager : IUserService
     }
 
     public async Task<IPaginate<User>?> GetListAsync(Expression<Func<User, bool>>? predicate = null,
-    Func<IQueryable<User>, IOrderedQueryable<User>>? orderBy = null,
-    Func<IQueryable<User>, IIncludableQueryable<User, object>>? include = null,
-    int index = 0,
-    int size = 10,
-    bool withDeleted = false,
-    bool enableTracking = true,
-    CancellationToken cancellationToken = default)
+        Func<IQueryable<User>, IOrderedQueryable<User>>? orderBy = null,
+        Func<IQueryable<User>, IIncludableQueryable<User, object>>? include = null,
+        int index = 0,
+        int size = 10,
+        bool withDeleted = false,
+        bool enableTracking = true,
+        CancellationToken cancellationToken = default)
     {
         IPaginate<User> userList = await _userRepository.GetListAsync(predicate, orderBy, include,
-        index,
-        size,
-        withDeleted,
-        enableTracking,
-        cancellationToken);
+            index,
+            size,
+            withDeleted,
+            enableTracking,
+            cancellationToken);
 
         return userList;
     }
