@@ -39,10 +39,10 @@ public class EnableEmailAuthenticatorCommand : IRequest, ISecuredRequest
         private readonly IUserService _userService;
 
         public EnableEmailAuthenticatorCommandHandler(IUserService userService,
-        IEmailAuthenticatorRepository emailAuthenticatorRepository,
-        IMailService mailService,
-        AuthBusinessRules authBusinessRules,
-        IAuthenticatorService authenticatorService)
+            IEmailAuthenticatorRepository emailAuthenticatorRepository,
+            IMailService mailService,
+            AuthBusinessRules authBusinessRules,
+            IAuthenticatorService authenticatorService)
         {
             _userService = userService;
             _emailAuthenticatorRepository = emailAuthenticatorRepository;
@@ -54,7 +54,7 @@ public class EnableEmailAuthenticatorCommand : IRequest, ISecuredRequest
         public async Task Handle(EnableEmailAuthenticatorCommand request, CancellationToken cancellationToken)
         {
             User? user = await _userService.GetAsync(predicate: u => u.Id == request.UserId,
-            cancellationToken: cancellationToken);
+                cancellationToken: cancellationToken);
 
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserShouldNotBeHaveAuthenticator(user!);
@@ -64,8 +64,7 @@ public class EnableEmailAuthenticatorCommand : IRequest, ISecuredRequest
             await _userService.UpdateAsync(user);
 
             EmailAuthenticator emailAuthenticator = await _authenticatorService.CreateEmailAuthenticator(user);
-            EmailAuthenticator addedEmailAuthenticator =
-            await _emailAuthenticatorRepository.AddAsync(emailAuthenticator, cancellationToken);
+            EmailAuthenticator addedEmailAuthenticator = await _emailAuthenticatorRepository.AddAsync(emailAuthenticator, cancellationToken);
 
             var toEmailList = new List<MailboxAddress> { new(name: user.Email, user.Email) };
 

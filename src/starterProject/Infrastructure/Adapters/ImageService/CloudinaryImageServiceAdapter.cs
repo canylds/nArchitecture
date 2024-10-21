@@ -36,7 +36,7 @@ public class CloudinaryImageServiceAdapter : ImageServiceBase
     public override async Task DeleteAsync(string imageUrl)
     {
         DeletionParams deletionParams = new(GetPublicId(imageUrl));
-        
+
         await _cloudinary.DestroyAsync(deletionParams);
     }
 

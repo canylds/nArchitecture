@@ -35,9 +35,9 @@ public class LoginCommand : IRequest<LoggedResponse>
         private readonly IUserService _userService;
 
         public LoginCommandHandler(IUserService userService,
-        IAuthService authService,
-        AuthBusinessRules authBusinessRules,
-        IAuthenticatorService authenticatorService)
+            IAuthService authService,
+            AuthBusinessRules authBusinessRules,
+            IAuthenticatorService authenticatorService)
         {
             _userService = userService;
             _authService = authService;
@@ -48,7 +48,7 @@ public class LoginCommand : IRequest<LoggedResponse>
         public async Task<LoggedResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
         {
             User? user = await _userService.GetAsync(predicate: u => u.Email == request.UserForLoginDto.Email,
-            cancellationToken: cancellationToken);
+                cancellationToken: cancellationToken);
 
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserPasswordShouldBeMatch(user!, request.UserForLoginDto.Password);

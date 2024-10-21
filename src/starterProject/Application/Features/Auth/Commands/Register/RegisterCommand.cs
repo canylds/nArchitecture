@@ -33,8 +33,8 @@ public class RegisterCommand : IRequest<RegisteredResponse>
         private readonly AuthBusinessRules _authBusinessRules;
 
         public RegisterCommandHandler(IUserRepository userRepository,
-        IAuthService authService,
-        AuthBusinessRules authBusinessRules)
+            IAuthService authService,
+            AuthBusinessRules authBusinessRules)
         {
             _userRepository = userRepository;
             _authService = authService;
@@ -46,8 +46,8 @@ public class RegisterCommand : IRequest<RegisteredResponse>
             await _authBusinessRules.UserEmailShouldBeNotExists(request.UserForRegisterDto.Email);
 
             HashingHelper.CreatePasswordHash(request.UserForRegisterDto.Password,
-            passwordHash: out byte[] passwordHash,
-            passwordSalt: out byte[] passwordSalt);
+                passwordHash: out byte[] passwordHash,
+                passwordSalt: out byte[] passwordSalt);
 
             User newUser = new()
             {

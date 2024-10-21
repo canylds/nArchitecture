@@ -30,6 +30,7 @@ public class Program
             tokenOptions:
             builder.Configuration.GetSection("TokenOptions").Get<TokenOptions>()
             ?? throw new InvalidOperationException("TokenOptions section cannot found in configuration."));
+
         builder.Services.AddPersistenceServices(builder.Configuration);
         builder.Services.AddInfrastructureServices();
         builder.Services.AddHttpContextAccessor();
@@ -53,7 +54,7 @@ public class Program
         });
 
         builder.Services.AddDistributedMemoryCache();
-        builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhost:6379");
+        //builder.Services.AddStackExchangeRedisCache(opt => opt.Configuration = "localhost:6379");
 
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddCors(opt => opt.AddDefaultPolicy(p =>

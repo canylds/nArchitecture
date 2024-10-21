@@ -9,7 +9,8 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Core.Security.JWT;
 
-public class JwtHelper<TUserId, TOperationClaimId, TRefreshTokenId> : ITokenHelper<TUserId, TOperationClaimId, TRefreshTokenId>
+public class JwtHelper<TUserId, TOperationClaimId, TRefreshTokenId>
+    : ITokenHelper<TUserId, TOperationClaimId, TRefreshTokenId>
 {
     private readonly TokenOptions _tokenOptions;
 
@@ -61,16 +62,17 @@ public class JwtHelper<TUserId, TOperationClaimId, TRefreshTokenId> : ITokenHelp
         DateTime accessTokenExpiration)
     {
         return new JwtSecurityToken(tokenOptions.Issuer,
-        tokenOptions.Audience,
-        expires: accessTokenExpiration,
-        notBefore: DateTime.Now,
-        claims: SetClaims(user, operationClaims),
-        signingCredentials: signingCredentials);
+            tokenOptions.Audience,
+            expires: accessTokenExpiration,
+            notBefore: DateTime.Now,
+            claims: SetClaims(user, operationClaims),
+            signingCredentials: signingCredentials);
     }
 
     protected virtual IEnumerable<Claim> SetClaims(User<TUserId> user, IList<OperationClaim<TOperationClaimId>> operationClaims)
     {
         List<Claim> claims = [];
+
         claims.AddNameIdentifier(user!.Id!.ToString()!);
         claims.AddEmail(user.Email);
         claims.AddRoles(operationClaims.Select(c => c.Name).ToArray());

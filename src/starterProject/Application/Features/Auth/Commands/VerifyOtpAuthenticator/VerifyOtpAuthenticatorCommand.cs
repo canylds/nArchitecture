@@ -35,9 +35,9 @@ public class VerifyOtpAuthenticatorCommand : IRequest, ISecuredRequest
         private readonly IUserService _userService;
 
         public VerifyOtpAuthenticatorCommandHandler(IOtpAuthenticatorRepository otpAuthenticatorRepository,
-        AuthBusinessRules authBusinessRules,
-        IUserService userService,
-        IAuthenticatorService authenticatorService)
+            AuthBusinessRules authBusinessRules,
+            IUserService userService,
+            IAuthenticatorService authenticatorService)
         {
             _otpAuthenticatorRepository = otpAuthenticatorRepository;
             _authBusinessRules = authBusinessRules;
@@ -47,8 +47,9 @@ public class VerifyOtpAuthenticatorCommand : IRequest, ISecuredRequest
 
         public async Task Handle(VerifyOtpAuthenticatorCommand request, CancellationToken cancellationToken)
         {
-            OtpAuthenticator? otpAuthenticator = await _otpAuthenticatorRepository.GetAsync(predicate: oa => oa.UserId == request.UserId,
-            cancellationToken: cancellationToken);
+            OtpAuthenticator? otpAuthenticator =
+                await _otpAuthenticatorRepository.GetAsync(predicate: oa => oa.UserId == request.UserId,
+                cancellationToken: cancellationToken);
 
             await _authBusinessRules.OtpAuthenticatorShouldBeExists(otpAuthenticator);
 

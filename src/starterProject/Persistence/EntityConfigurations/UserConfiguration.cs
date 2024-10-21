@@ -1,3 +1,4 @@
+using Core.Security.Enums;
 using Core.Security.Hashing;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore;
@@ -38,20 +39,19 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
     {
         get
         {
-            HashingHelper.CreatePasswordHash(password: "Passw0rd!",
-            passwordHash: out byte[] passwordHash,
-            passwordSalt: out byte[] passwordSalt);
+            int id = 0;
 
-            User adminUser = new()
-            {
-                Id = 1,
-                CreatedDate = DateTime.UtcNow,
-                Email = "narch@example.com",
-                PasswordHash = passwordHash,
-                PasswordSalt = passwordSalt,
-                FirstName = "John",
-                LastName = "Doe"
-            };
+            HashingHelper.CreatePasswordHash(password: "Passw0rd!",
+                passwordHash: out byte[] passwordHash,
+                passwordSalt: out byte[] passwordSalt);
+
+            User adminUser = new(id: ++id,
+                email: "narch@example.com",
+                passwordHash: passwordHash,
+                passwordSalt: passwordSalt,
+                authenticatorType: AuthenticatorType.None,
+                firstName: "John",
+                lastName: "Doe");
 
             yield return adminUser;
         }

@@ -34,8 +34,7 @@ public class CacheRemovingBehavior<TRequest, TResponse> : IPipelineBehavior<TReq
 
                 if (cachedGroup != null)
                 {
-                    HashSet<string> keysInGroup =
-                        JsonSerializer.Deserialize<HashSet<string>>(Encoding.Default.GetString(cachedGroup))!;
+                    HashSet<string> keysInGroup = JsonSerializer.Deserialize<HashSet<string>>(Encoding.Default.GetString(cachedGroup))!;
 
                     foreach (string key in keysInGroup)
                     {
@@ -54,7 +53,6 @@ public class CacheRemovingBehavior<TRequest, TResponse> : IPipelineBehavior<TReq
         if (request.CacheKey != null)
         {
             await _cache.RemoveAsync(request.CacheKey, cancellationToken);
-
             _logger.LogInformation($"Removed Cache -> {request.CacheKey}");
         }
 

@@ -8,6 +8,7 @@ namespace Core.CrossCuttingConcerns.Exception.Handlers;
 public class HttpExceptionHandler : ExceptionHandler
 {
     private HttpResponse? _response;
+
     public HttpResponse Response
     {
         get => _response ?? throw new ArgumentNullException(nameof(_response));

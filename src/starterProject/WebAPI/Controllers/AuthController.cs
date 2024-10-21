@@ -24,7 +24,7 @@ public class AuthController : BaseController
         const string configurationSection = "WebAPIConfiguration";
 
         _configuration = configuration.GetSection(configurationSection).Get<WebApiConfiguration>()
-        ?? throw new NullReferenceException($"\"{configurationSection}\" section cannot found in configuration.");
+            ?? throw new NullReferenceException($"\"{configurationSection}\" section cannot found in configuration.");
     }
 
     [HttpPost("Login")]

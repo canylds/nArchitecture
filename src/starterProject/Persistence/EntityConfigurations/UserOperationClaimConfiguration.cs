@@ -35,13 +35,9 @@ public class UserOperationClaimConfiguration : IEntityTypeConfiguration<UserOper
     {
         get
         {
-            yield return new()
-            {
-                Id = 1,
-                CreatedDate = DateTime.UtcNow,
-                UserId = 1,
-                OperationClaimId = 1
-            };
+            int id = 0;
+
+            yield return new UserOperationClaim(id: ++id, userId: 1, operationClaimmId: 1);
         }
     }
 }

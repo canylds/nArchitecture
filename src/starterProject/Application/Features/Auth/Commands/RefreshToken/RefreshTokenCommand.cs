@@ -31,8 +31,8 @@ public class RefreshTokenCommand : IRequest<RefreshedTokenResponse>
         private readonly AuthBusinessRules _authBusinessRules;
 
         public RefreshTokenCommandHandler(IAuthService authService,
-        IUserService userService,
-        AuthBusinessRules authBusinessRules)
+            IUserService userService,
+            AuthBusinessRules authBusinessRules)
         {
             _authService = authService;
             _userService = userService;
@@ -47,19 +47,19 @@ public class RefreshTokenCommand : IRequest<RefreshedTokenResponse>
 
             if (refreshToken!.RevokedDate != null)
                 await _authService.RevokeDescendantRefreshTokens(refreshToken,
-                request.IpAddress,
-                reason: $"Attempted reuse of revoked ancestor token: {refreshToken.Token}");
+                    request.IpAddress,
+                    reason: $"Attempted reuse of revoked ancestor token: {refreshToken.Token}");
 
             await _authBusinessRules.RefreshTokenShouldBeActive(refreshToken);
 
             User? user = await _userService.GetAsync(predicate: u => u.Id == refreshToken.UserId,
-            cancellationToken: cancellationToken);
+                cancellationToken: cancellationToken);
 
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
 
             Domain.Entities.RefreshToken newRefreshToken = await _authService.RotateRefreshToken(user: user!,
-            refreshToken,
-            request.IpAddress);
+                refreshToken,
+                request.IpAddress);
 
             Domain.Entities.RefreshToken addedRefreshToken = await _authService.AddRefreshToken(newRefreshToken);
 

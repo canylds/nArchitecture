@@ -9,10 +9,10 @@ public class RegisterCommandValidator : AbstractValidator<RegisterCommand>
     {
         RuleFor(rc => rc.UserForRegisterDto.Email).NotEmpty().EmailAddress();
         RuleFor(rc => rc.UserForRegisterDto.Password)
-        .NotEmpty()
-        .MinimumLength(6)
-        .Must(StrongPassword)
-        .WithMessage("Password must contain at least one uppercase letter, one lowercase letter, one number and one special character.");
+            .NotEmpty()
+            .MinimumLength(6)
+            .Must(StrongPassword)
+            .WithMessage("Password must contain at least one uppercase letter, one lowercase letter, one number and one special character.");
     }
 
     private bool StrongPassword(string value)

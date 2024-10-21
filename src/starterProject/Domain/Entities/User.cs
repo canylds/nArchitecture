@@ -20,25 +20,25 @@ public class User : User<int>
     }
 
     public User(string email,
-        byte[] passwordSalt,
         byte[] passwordHash,
+        byte[] passwordSalt,
         AuthenticatorType authenticatorType,
-        string firstname,
-        string lastname) : base(email, passwordSalt, passwordHash, authenticatorType)
+        string firstName,
+        string lastName) : base(email, passwordHash, passwordSalt, authenticatorType)
     {
-        FirstName = firstname;
-        LastName = lastname;
+        FirstName = firstName;
+        LastName = lastName;
     }
 
     public User(int id,
         string email,
-        byte[] passwordSalt,
         byte[] passwordHash,
+        byte[] passwordSalt,
         AuthenticatorType authenticatorType,
-        string firstname,
-        string lastname) : base(id, email, passwordSalt, passwordHash, authenticatorType)
+        string firstName,
+        string lastName) : base(id, email, passwordHash, passwordSalt, authenticatorType)
     {
-        FirstName = firstname;
-        LastName = lastname;
+        FirstName = firstName;
+        LastName = lastName;
     }
 }

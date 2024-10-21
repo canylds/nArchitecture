@@ -26,7 +26,6 @@ public class OtpNetOtpAuthenticatorHelper : IOtpAuthenticatorHelper
         Totp totp = new(secretKey);
 
         string totpCode = totp.ComputeTotp(DateTime.UtcNow);
-
         bool result = totpCode == code;
 
         return Task.FromResult(result);

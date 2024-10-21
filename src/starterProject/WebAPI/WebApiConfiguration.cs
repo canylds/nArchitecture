@@ -8,7 +8,7 @@ public class WebApiConfiguration
     public WebApiConfiguration()
     {
         ApiDomain = string.Empty;
-        AllowedOrigins = Array.Empty<string>();
+        AllowedOrigins = [];
     }
 
     public WebApiConfiguration(string apiDomain, string[] allowedOrigins)

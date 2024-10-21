@@ -96,7 +96,6 @@ public class AuthManager : IAuthService
 
         if (childToken?.RevokedDate != null && childToken.ExpirationDate <= DateTime.UtcNow)
             await RevokeRefreshToken(childToken, ipAddress, reason);
-
         else
             await RevokeDescendantRefreshTokens(refreshToken: childToken!, ipAddress, reason);
     }

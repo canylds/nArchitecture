@@ -21,7 +21,8 @@ public class RequestValidationBehavior<TRequest, TResponse> : IPipelineBehavior<
     {
         ValidationContext<object> context = new(request);
 
-        IEnumerable<ValidationExceptionModel> errors = _validators.Select(validator => validator.Validate(context))
+        IEnumerable<ValidationExceptionModel> errors = _validators
+            .Select(validator => validator.Validate(context))
             .SelectMany(result => result.Errors)
             .Where(failure => failure != null)
             .GroupBy(keySelector: p => p.PropertyName, resultSelector: (propertyName, errors) => new ValidationExceptionModel
