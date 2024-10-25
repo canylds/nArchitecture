@@ -60,6 +60,16 @@ public class UsersController : BaseController
         return Ok(result);
     }
 
+    [HttpGet("GetFromAuth")]
+    public async Task<IActionResult> GetFromAuth()
+    {
+        GetByIdUserQuery getByIdUserQuery = new(id: getUserIdFromRequest());
+
+        GetByIdUserResponse result = await Mediator.Send(getByIdUserQuery);
+
+        return Ok(result);
+    }
+
     [HttpGet]
     public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
     {
