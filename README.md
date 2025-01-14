@@ -1,8 +1,8 @@
 <p align="center">
-  <a href="https://github.com/kodlamaio-projects/nArchitecture/graphs/contributors"><img src="https://img.shields.io/github/contributors/canylds/nArchitecture.svg?style=for-the-badge"></a>
-  <a href="https://github.com/kodlamaio-projects/nArchitecture/network/members"><img src="https://img.shields.io/github/forks/canylds/nArchitecture.svg?style=for-the-badge"></a>
-  <a href="https://github.com/kodlamaio-projects/nArchitecture/stargazers"><img src="https://img.shields.io/github/stars/canylds/nArchitecture.svg?style=for-the-badge"></a>
-  <a href="https://github.com/kodlamaio-projects/nArchitecture/issues"><img src="https://img.shields.io/github/issues/canylds/nArchitecture.svg?style=for-the-badge"></a>
+  <a href="https://github.com/canylds/nArchitecture/graphs/contributors"><img src="https://img.shields.io/github/contributors/canylds/nArchitecture.svg?style=for-the-badge"></a>
+  <a href="https://github.com/canylds/nArchitecture/network/members"><img src="https://img.shields.io/github/forks/canylds/nArchitecture.svg?style=for-the-badge"></a>
+  <a href="https://github.com/canylds/nArchitecture/stargazers"><img src="https://img.shields.io/github/stars/canylds/nArchitecture.svg?style=for-the-badge"></a>
+  <a href="https://github.com/canylds/nArchitecture/issues"><img src="https://img.shields.io/github/issues/canylds/nArchitecture.svg?style=for-the-badge"></a>
 </p><br />
 
 ## 💻 About The Project
