@@ -11,7 +11,7 @@ public class BaseController : ControllerBase
 
     private IMediator? _mediator;
 
-    protected string getIpAddress()
+    protected string GetIpAddress()
     {
         string ipAddress = Request.Headers.ContainsKey("X-Forwarded-For")
             ? Request.Headers["X-Forwarded-For"].ToString()
@@ -21,7 +21,7 @@ public class BaseController : ControllerBase
         return ipAddress;
     }
 
-    protected int getUserIdFromRequest()
+    protected int GetUserIdFromRequest()
     {
         int userId = Convert.ToInt32(HttpContext.User.GetIdClaim());
 

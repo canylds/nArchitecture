@@ -2,6 +2,7 @@ using Application.Features.OperationClaims.Commands.Create;
 using Application.Features.OperationClaims.Commands.Delete;
 using Application.Features.OperationClaims.Commands.Update;
 using Application.Features.OperationClaims.Queries.GetById;
+using Application.Features.OperationClaims.Queries.GetList;
 using Application.Features.OperationClaims.Queries.GetPagedList;
 using AutoMapper;
 using core.Application.Responses;
@@ -24,6 +25,8 @@ public class MappingProfiles : Profile
         CreateMap<OperationClaim, DeletedOperationClaimResponse>().ReverseMap();
 
         CreateMap<OperationClaim, GetByIdOperationClaimResponse>().ReverseMap();
+
+        CreateMap<OperationClaim, GetListOperationClaimListItemDto>().ReverseMap();
 
         CreateMap<OperationClaim, GetPagedListOperationClaimListItemDto>().ReverseMap();
         CreateMap<IPaginate<OperationClaim>, GetPagedListResponse<GetPagedListOperationClaimListItemDto>>().ReverseMap();

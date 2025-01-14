@@ -33,7 +33,7 @@ public class AuthController : BaseController
         LoginCommand loginCommand = new()
         {
             UserForLoginDto = userForLoginDto,
-            IpAddress = getIpAddress()
+            IpAddress = GetIpAddress()
         };
 
         LoggedResponse result = await Mediator.Send(loginCommand);
@@ -50,7 +50,7 @@ public class AuthController : BaseController
         RegisterCommand registerCommand = new()
         {
             UserForRegisterDto = userForRegisterDto,
-            IpAddress = getIpAddress()
+            IpAddress = GetIpAddress()
         };
 
         RegisteredResponse result = await Mediator.Send(registerCommand);
@@ -66,7 +66,7 @@ public class AuthController : BaseController
         RefreshTokenCommand refreshTokenCommand = new()
         {
             RefreshToken = getRefreshTokenFromCookies(),
-            IpAddress = getIpAddress()
+            IpAddress = GetIpAddress()
         };
 
         RefreshedTokenResponse result = await Mediator.Send(refreshTokenCommand);
@@ -82,7 +82,7 @@ public class AuthController : BaseController
         RevokeTokenCommand revokeTokenCommand = new()
         {
             Token = refreshToken ?? getRefreshTokenFromCookies(),
-            IpAddress = getIpAddress()
+            IpAddress = GetIpAddress()
         };
 
         RevokedTokenResponse result = await Mediator.Send(revokeTokenCommand);
@@ -95,7 +95,7 @@ public class AuthController : BaseController
     {
         EnableEmailAuthenticatorCommand enableEmailAuthenticatorCommand = new()
         {
-            UserId = getUserIdFromRequest(),
+            UserId = GetUserIdFromRequest(),
             VerifyEmailUrlPrefix = $"{_configuration.ApiDomain}/Auth/VerifyEmailAuthenticator"
         };
 
@@ -109,7 +109,7 @@ public class AuthController : BaseController
     {
         EnableOtpAuthenticatorCommand enableOtpAuthenticatorCommand = new()
         {
-            UserId = getUserIdFromRequest()
+            UserId = GetUserIdFromRequest()
         };
 
         EnabledOtpAuthenticatorResponse result = await Mediator.Send(enableOtpAuthenticatorCommand);
@@ -130,7 +130,7 @@ public class AuthController : BaseController
     {
         VerifyOtpAuthenticatorCommand verifyEmailAuthenticatorCommand = new()
         {
-            UserId = getUserIdFromRequest(),
+            UserId = GetUserIdFromRequest(),
             ActivationCode = authenticatorCode
         };
 

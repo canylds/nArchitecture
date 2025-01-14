@@ -3,6 +3,7 @@ using Application.Features.Users.Commands.Delete;
 using Application.Features.Users.Commands.Update;
 using Application.Features.Users.Commands.UpdateFromAuth;
 using Application.Features.Users.Queries.GetById;
+using Application.Features.Users.Queries.GetList;
 using Application.Features.Users.Queries.GetPagedList;
 using AutoMapper;
 using core.Application.Responses;
@@ -28,6 +29,8 @@ public class MappingProfiles : Profile
         CreateMap<User, DeletedUserResponse>().ReverseMap();
 
         CreateMap<User, GetByIdUserResponse>().ReverseMap();
+
+        CreateMap<User, GetListUserListItemDto>().ReverseMap();
 
         CreateMap<User, GetPagedListUserListItemDto>().ReverseMap();
         CreateMap<IPaginate<User>, GetPagedListResponse<GetPagedListUserListItemDto>>().ReverseMap();

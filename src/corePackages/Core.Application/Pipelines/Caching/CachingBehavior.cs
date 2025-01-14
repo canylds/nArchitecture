@@ -21,7 +21,8 @@ public class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
     {
         _cache = cache;
         _logger = logger;
-        _cacheSettings = configuration.GetSection("CacheSettings").Get<CacheSettings>() ?? throw new InvalidOperationException();
+        _cacheSettings = configuration.GetSection("CacheSettings").Get<CacheSettings>() 
+            ?? throw new InvalidOperationException();
     }
 
     public async Task<TResponse> Handle(TRequest request,

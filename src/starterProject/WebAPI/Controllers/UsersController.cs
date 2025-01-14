@@ -3,6 +3,7 @@ using Application.Features.Users.Commands.Delete;
 using Application.Features.Users.Commands.Update;
 using Application.Features.Users.Commands.UpdateFromAuth;
 using Application.Features.Users.Queries.GetById;
+using Application.Features.Users.Queries.GetList;
 using Application.Features.Users.Queries.GetPagedList;
 using core.Application.Responses;
 using Core.Application.Requests;
@@ -33,7 +34,7 @@ public class UsersController : BaseController
     [HttpPut("FromAuth")]
     public async Task<IActionResult> UpdateFromAuth([FromBody] UpdateUserFromAuthCommand updateUserFromAuthCommand)
     {
-        updateUserFromAuthCommand.Id = getUserIdFromRequest();
+        updateUserFromAuthCommand.Id = GetUserIdFromRequest();
 
         UpdatedUserFromAuthResponse result = await Mediator.Send(updateUserFromAuthCommand);
 
@@ -63,7 +64,7 @@ public class UsersController : BaseController
     [HttpGet("GetFromAuth")]
     public async Task<IActionResult> GetFromAuth()
     {
-        GetByIdUserQuery getByIdUserQuery = new(id: getUserIdFromRequest());
+        GetByIdUserQuery getByIdUserQuery = new(id: GetUserIdFromRequest());
 
         GetByIdUserResponse result = await Mediator.Send(getByIdUserQuery);
 
@@ -71,7 +72,17 @@ public class UsersController : BaseController
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
+    public async Task<IActionResult> GetList()
+    {
+        GetListUserQuery getListUserQuery = new();
+
+        IList<GetListUserListItemDto> result = await Mediator.Send(getListUserQuery);
+
+        return Ok(result);
+    }
+
+    [HttpGet("GetPaged")]
+    public async Task<IActionResult> GetPagedList([FromQuery] PageRequest pageRequest)
     {
         GetPagedListUserQuery getPagedListUserQuery = new(pageRequest);
 
