@@ -124,7 +124,58 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext> : IAsyncRepository<T
         return await queryable.FirstOrDefaultAsync(predicate, cancellationToken);
     }
 
-    public async Task<IPaginate<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null,
+    public async Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool withDeleted = false,
+        bool enableTracking = true,
+        CancellationToken cancellationToken = default)
+    {
+        IQueryable<TEntity> queryable = Query();
+
+        if (!enableTracking)
+            queryable = queryable.AsNoTracking();
+
+        if (include != null)
+            queryable = include(queryable);
+
+        if (withDeleted)
+            queryable = queryable.IgnoreQueryFilters();
+
+        if (predicate != null)
+            queryable = queryable.Where(predicate);
+
+        if (orderBy != null)
+            return await orderBy(queryable).ToListAsync(cancellationToken);
+
+        return await queryable.ToListAsync(cancellationToken);
+    }
+
+    public async Task<IList<TEntity>> GetListByDynamicAsync(DynamicQuery dynamic,
+        Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool withDeleted = false,
+        bool enableTracking = true,
+        CancellationToken cancellationToken = default)
+    {
+        IQueryable<TEntity> queryable = Query().ToDynamic(dynamic);
+
+        if (!enableTracking)
+            queryable = queryable.AsNoTracking();
+
+        if (include != null)
+            queryable = include(queryable);
+
+        if (withDeleted)
+            queryable = queryable.IgnoreQueryFilters();
+
+        if (predicate != null)
+            queryable = queryable.Where(predicate);
+
+        return await queryable.ToListAsync(cancellationToken);
+    }
+
+    public async Task<IPaginate<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         int index = 0,
@@ -153,7 +204,7 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext> : IAsyncRepository<T
         return await queryable.ToPaginateAsync(index, size, from: 0, cancellationToken);
     }
 
-    public async Task<IPaginate<TEntity>> GetListByDynamicAsync(DynamicQuery dynamic,
+    public async Task<IPaginate<TEntity>> GetPagedListByDynamicAsync(DynamicQuery dynamic,
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         int index = 0,
@@ -271,7 +322,56 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext> : IAsyncRepository<T
         return queryable.FirstOrDefault(predicate);
     }
 
-    public IPaginate<TEntity> GetList(Expression<Func<TEntity, bool>>? predicate = null,
+    public IList<TEntity> GetList(Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool withDeleted = false,
+        bool enableTracking = true)
+    {
+        IQueryable<TEntity> queryable = Query();
+
+        if (!enableTracking)
+            queryable = queryable.AsNoTracking();
+
+        if (include != null)
+            queryable = include(queryable);
+
+        if (withDeleted)
+            queryable = queryable.IgnoreQueryFilters();
+
+        if (predicate != null)
+            queryable = queryable.Where(predicate);
+
+        if (orderBy != null)
+            return orderBy(queryable).ToList();
+
+        return queryable.ToList();
+    }
+
+    public IList<TEntity> GetListByDynamic(DynamicQuery dynamic,
+        Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool withDeleted = false,
+        bool enableTracking = true)
+    {
+        IQueryable<TEntity> queryable = Query().ToDynamic(dynamic);
+
+        if (!enableTracking)
+            queryable = queryable.AsNoTracking();
+
+        if (include != null)
+            queryable = include(queryable);
+
+        if (withDeleted)
+            queryable = queryable.IgnoreQueryFilters();
+
+        if (predicate != null)
+            queryable = queryable.Where(predicate);
+
+        return queryable.ToList();
+    }
+
+    public IPaginate<TEntity> GetPagedList(Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         int index = 0,
@@ -299,7 +399,7 @@ public class EfRepositoryBase<TEntity, TEntityId, TContext> : IAsyncRepository<T
         return queryable.ToPaginate(index, size);
     }
 
-    public IPaginate<TEntity> GetListByDynamic(DynamicQuery dynamic,
+    public IPaginate<TEntity> GetPagedListByDynamic(DynamicQuery dynamic,
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         int index = 0,

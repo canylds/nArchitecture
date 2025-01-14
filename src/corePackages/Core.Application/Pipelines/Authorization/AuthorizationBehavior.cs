@@ -23,7 +23,7 @@ public class AuthorizationBehavior<TRequest, TResponse> : IPipelineBehavior<TReq
         if (!_httpContextAccessor.HttpContext.User.Claims.Any())
             throw new AuthorizationException("You are not authenticated.");
 
-        if (request.Roles.Any())
+        if (request.Roles.Length != 0)
         {
             ICollection<string>? userRoleClaims = _httpContextAccessor.HttpContext.User.GetRoleClaims() ?? [];
 

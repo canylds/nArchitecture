@@ -2,7 +2,7 @@ using Core.Persistence.Paging;
 
 namespace core.Application.Responses;
 
-public class GetListResponse<T> : BasePageableModel
+public class GetPagedListResponse<T> : BasePageableModel
 {
     private IList<T>? _items;
 

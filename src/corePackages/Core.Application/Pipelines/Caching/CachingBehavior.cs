@@ -41,12 +41,12 @@ public class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
             _logger.LogInformation($"Fetched from Cache -> {request.CacheKey}");
         }
         else
-            response = await getResponseAndAddToCache(request, next, cancellationToken);
+            response = await GetResponseAndAddToCache(request, next, cancellationToken);
 
         return response;
     }
 
-    private async Task<TResponse> getResponseAndAddToCache(TRequest request,
+    private async Task<TResponse> GetResponseAndAddToCache(TRequest request,
         RequestHandlerDelegate<TResponse> next,
         CancellationToken cancellationToken)
     {
@@ -65,12 +65,12 @@ public class CachingBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, 
         _logger.LogInformation($"Added to Cache -> {request.CacheKey}");
 
         if (request.CacheGroupKey != null)
-            await addCacheKeyToGroup(request, slidingExpiration, cancellationToken);
+            await AddCacheKeyToGroup(request, slidingExpiration, cancellationToken);
 
         return response;
     }
 
-    private async Task addCacheKeyToGroup(TRequest request,
+    private async Task AddCacheKeyToGroup(TRequest request,
         TimeSpan slidingExpiration,
         CancellationToken cancellationToken)
     {

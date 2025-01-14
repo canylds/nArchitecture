@@ -25,7 +25,19 @@ public interface IAsyncRepository<TEntity, TEntityId> : IQuery<TEntity>
         bool withDeleted = false,
         bool enableTracking = true,
         CancellationToken cancellationToken = default);
-    Task<IPaginate<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null,
+    Task<IList<TEntity>> GetListAsync(Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool withDeleted = false,
+        bool enableTracking = true,
+        CancellationToken cancellationToken = default);
+    Task<IList<TEntity>> GetListByDynamicAsync(DynamicQuery dynamic,
+        Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
+        bool withDeleted = false,
+        bool enableTracking = true,
+        CancellationToken cancellationToken = default);
+    Task<IPaginate<TEntity>> GetPagedListAsync(Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         int index = 0,
@@ -33,7 +45,7 @@ public interface IAsyncRepository<TEntity, TEntityId> : IQuery<TEntity>
         bool withDeleted = false,
         bool enableTracking = true,
         CancellationToken cancellationToken = default);
-    Task<IPaginate<TEntity>> GetListByDynamicAsync(DynamicQuery dynamic,
+    Task<IPaginate<TEntity>> GetPagedListByDynamicAsync(DynamicQuery dynamic,
         Expression<Func<TEntity, bool>>? predicate = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         int index = 0,

@@ -2,7 +2,7 @@ using Application.Features.OperationClaims.Commands.Create;
 using Application.Features.OperationClaims.Commands.Delete;
 using Application.Features.OperationClaims.Commands.Update;
 using Application.Features.OperationClaims.Queries.GetById;
-using Application.Features.OperationClaims.Queries.GetList;
+using Application.Features.OperationClaims.Queries.GetPagedList;
 using core.Application.Responses;
 using Core.Application.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -52,9 +52,10 @@ public class OperationClaimsController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
     {
-        GetListOperationClaimQuery getListOperationClaimQuery = new(pageRequest);
+        GetPagedListOperationClaimQuery getPagedListOperationClaimQuery = new(pageRequest);
 
-        GetListResponse<GetListOperationClaimListItemDto> result = await Mediator.Send(getListOperationClaimQuery);
+        GetPagedListResponse<GetPagedListOperationClaimListItemDto> result =
+            await Mediator.Send(getPagedListOperationClaimQuery);
 
         return Ok(result);
     }

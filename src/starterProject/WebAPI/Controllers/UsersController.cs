@@ -3,7 +3,7 @@ using Application.Features.Users.Commands.Delete;
 using Application.Features.Users.Commands.Update;
 using Application.Features.Users.Commands.UpdateFromAuth;
 using Application.Features.Users.Queries.GetById;
-using Application.Features.Users.Queries.GetList;
+using Application.Features.Users.Queries.GetPagedList;
 using core.Application.Responses;
 using Core.Application.Requests;
 using Microsoft.AspNetCore.Mvc;
@@ -73,9 +73,9 @@ public class UsersController : BaseController
     [HttpGet]
     public async Task<IActionResult> GetList([FromQuery] PageRequest pageRequest)
     {
-        GetListUserQuery getListUserQuery = new(pageRequest);
+        GetPagedListUserQuery getPagedListUserQuery = new(pageRequest);
 
-        GetListResponse<GetListUserListItemDto> result = await Mediator.Send(getListUserQuery);
+        GetPagedListResponse<GetPagedListUserListItemDto> result = await Mediator.Send(getPagedListUserQuery);
 
         return Ok(result);
     }

@@ -20,7 +20,7 @@ public class MailKitMailService : IMailService
         if (mail.ToList == null || mail.ToList.Count < 1)
             return;
 
-        emailPrepare(mail, email: out MimeMessage email, smtp: out SmtpClient smtp);
+        EmailPrepare(mail, email: out MimeMessage email, smtp: out SmtpClient smtp);
         smtp.Send(email);
         smtp.Disconnect(true);
         email.Dispose();
@@ -32,14 +32,14 @@ public class MailKitMailService : IMailService
         if (mail.ToList == null || mail.ToList.Count < 1)
             return;
 
-        emailPrepare(mail, email: out MimeMessage email, smtp: out SmtpClient smtp);
+        EmailPrepare(mail, email: out MimeMessage email, smtp: out SmtpClient smtp);
         await smtp.SendAsync(email);
         smtp.Disconnect(true);
         email.Dispose();
         smtp.Dispose();
     }
 
-    private void emailPrepare(Mail mail, out MimeMessage email, out SmtpClient smtp)
+    private void EmailPrepare(Mail mail, out MimeMessage email, out SmtpClient smtp)
     {
         email = new MimeMessage();
 
@@ -73,7 +73,7 @@ public class MailKitMailService : IMailService
 
         if (_mailSettings.DkimPrivateKey != null && _mailSettings.DkimSelector != null && _mailSettings.DomainName != null)
         {
-            DkimSigner signer = new(key: readPrivateKeyFromPemEncodedString(), _mailSettings.DomainName, _mailSettings.DkimSelector)
+            DkimSigner signer = new(key: ReadPrivateKeyFromPemEncodedString(), _mailSettings.DomainName, _mailSettings.DkimSelector)
             {
                 HeaderCanonicalizationAlgorithm = DkimCanonicalizationAlgorithm.Simple,
                 BodyCanonicalizationAlgorithm = DkimCanonicalizationAlgorithm.Simple,
@@ -93,7 +93,7 @@ public class MailKitMailService : IMailService
             smtp.Authenticate(_mailSettings.UserName, _mailSettings.Password);
     }
 
-    private AsymmetricKeyParameter readPrivateKeyFromPemEncodedString()
+    private AsymmetricKeyParameter ReadPrivateKeyFromPemEncodedString()
     {
         AsymmetricKeyParameter result;
 

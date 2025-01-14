@@ -63,7 +63,7 @@ public class UserManager : IUserService
         bool enableTracking = true,
         CancellationToken cancellationToken = default)
     {
-        IPaginate<User> userList = await _userRepository.GetListAsync(predicate, orderBy, include,
+        IPaginate<User> userList = await _userRepository.GetPagedListAsync(predicate, orderBy, include,
             index,
             size,
             withDeleted,

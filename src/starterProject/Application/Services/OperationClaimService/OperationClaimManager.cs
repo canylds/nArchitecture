@@ -68,7 +68,7 @@ public class OperationClaimManager : IOperationClaimService
         bool enableTracking = true,
         CancellationToken cancellationToken = default)
     {
-        IPaginate<OperationClaim> operationClaimList = await _operationClaimRepository.GetListAsync(predicate,
+        IPaginate<OperationClaim> operationClaimList = await _operationClaimRepository.GetPagedListAsync(predicate,
             orderBy,
             include,
             index,
