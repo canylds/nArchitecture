@@ -55,7 +55,7 @@ See the [open issues](https://github.com/canylds/nArchitecture/issues) for a lis
 
 ## 📧 Contact
 
-**Project Link:** [https://github.com/kodlamaio-projects/nArchitecture](https://github.com/canylds/nArchitecture)
+**Project Link:** [https://github.com/canylds/nArchitecture](https://github.com/canylds/nArchitecture)
 
 <!-- ## 🙏 Acknowledgements
 - []() -->
