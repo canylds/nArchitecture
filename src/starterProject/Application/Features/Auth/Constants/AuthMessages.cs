@@ -2,8 +2,6 @@ namespace Application.Features.Auth.Constants;
 
 public static class AuthMessages
 {
-    public const string SectionName = "Auth";
-
     public const string EmailAuthenticatorDontExists = "E-posta doğrulayıcı bulunmuyor.";
     public const string OtpAuthenticatorDontExists = "OTP doğrulayıcı bulunmuyor.";
     public const string AlreadyVerifiedOtpAuthenticatorIsExists = "Zaten doğrulanmış OTP doğrulayıcı bulunuyor.";
