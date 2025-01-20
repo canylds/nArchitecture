@@ -9,40 +9,40 @@ namespace Application.Services.UserOperationClaimService;
 
 public class UserOperationClaimManager : IUserOperationClaimService
 {
-    private readonly IUserOperationClaimRepository _userUserOperationClaimRepository;
-    private readonly UserOperationClaimBusinessRules _userUserOperationClaimBusinessRules;
+    private readonly IUserOperationClaimRepository _userOperationClaimRepository;
+    private readonly UserOperationClaimBusinessRules _userOperationClaimBusinessRules;
 
-    public UserOperationClaimManager(IUserOperationClaimRepository userUserOperationClaimRepository,
-        UserOperationClaimBusinessRules userUserOperationClaimBusinessRules)
+    public UserOperationClaimManager(IUserOperationClaimRepository userOperationClaimRepository,
+        UserOperationClaimBusinessRules userOperationClaimBusinessRules)
     {
-        _userUserOperationClaimRepository = userUserOperationClaimRepository;
-        _userUserOperationClaimBusinessRules = userUserOperationClaimBusinessRules;
+        _userOperationClaimRepository = userOperationClaimRepository;
+        _userOperationClaimBusinessRules = userOperationClaimBusinessRules;
     }
 
     public async Task<UserOperationClaim> AddAsync(UserOperationClaim userUserOperationClaim)
     {
-        await _userUserOperationClaimBusinessRules.UserShouldNotHasOperationClaimAlreadyWhenInsert(userUserOperationClaim.UserId,
+        await _userOperationClaimBusinessRules.UserShouldNotHasOperationClaimAlreadyWhenInsert(userUserOperationClaim.UserId,
             userUserOperationClaim.OperationClaimId);
 
-        UserOperationClaim addedUserOperationClaim = await _userUserOperationClaimRepository.AddAsync(userUserOperationClaim);
+        UserOperationClaim addedUserOperationClaim = await _userOperationClaimRepository.AddAsync(userUserOperationClaim);
 
         return addedUserOperationClaim;
     }
 
     public async Task<UserOperationClaim> UpdateAsync(UserOperationClaim userUserOperationClaim)
     {
-        await _userUserOperationClaimBusinessRules.UserShouldNotHasOperationClaimAlreadyWhenUpdated(userUserOperationClaim.Id,
+        await _userOperationClaimBusinessRules.UserShouldNotHasOperationClaimAlreadyWhenUpdated(userUserOperationClaim.Id,
             userUserOperationClaim.UserId,
             userUserOperationClaim.OperationClaimId);
 
-        UserOperationClaim updatedUserOperationClaim = await _userUserOperationClaimRepository.UpdateAsync(userUserOperationClaim);
+        UserOperationClaim updatedUserOperationClaim = await _userOperationClaimRepository.UpdateAsync(userUserOperationClaim);
 
         return updatedUserOperationClaim;
     }
 
     public async Task<UserOperationClaim> DeleteAsync(UserOperationClaim userUserOperationClaim, bool permanent = false)
     {
-        UserOperationClaim deletedUserOperationClaim = await _userUserOperationClaimRepository.DeleteAsync(userUserOperationClaim);
+        UserOperationClaim deletedUserOperationClaim = await _userOperationClaimRepository.DeleteAsync(userUserOperationClaim);
 
         return deletedUserOperationClaim;
     }
@@ -53,7 +53,7 @@ public class UserOperationClaimManager : IUserOperationClaimService
         bool enableTracking = true,
         CancellationToken cancellationToken = default)
     {
-        UserOperationClaim? userUserOperationClaim = await _userUserOperationClaimRepository.GetAsync(predicate,
+        UserOperationClaim? userUserOperationClaim = await _userOperationClaimRepository.GetAsync(predicate,
             include,
             withDeleted,
             enableTracking,
@@ -71,7 +71,7 @@ public class UserOperationClaimManager : IUserOperationClaimService
         bool enableTracking = true,
         CancellationToken cancellationToken = default)
     {
-        IPaginate<UserOperationClaim> userUserOperationClaimList = await _userUserOperationClaimRepository.GetPagedListAsync(predicate,
+        IPaginate<UserOperationClaim> userUserOperationClaimList = await _userOperationClaimRepository.GetPagedListAsync(predicate,
             orderBy,
             include,
             index,
