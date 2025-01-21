@@ -60,7 +60,7 @@ public class OperationClaimsController : BaseController
         return Ok(result);
     }
 
-    [HttpGet("GetPaged")]
+    [HttpGet("Paged")]
     public async Task<IActionResult> GetPagedList([FromQuery] PageRequest pageRequest)
     {
         GetPagedListOperationClaimQuery getPagedListOperationClaimQuery = new(pageRequest);

@@ -39,7 +39,7 @@ public class AuthController : BaseController
         LoggedResponse result = await Mediator.Send(loginCommand);
 
         if (result.RefreshToken is not null)
-            setRefreshTokenToCookie(result.RefreshToken);
+            SetRefreshTokenToCookie(result.RefreshToken);
 
         return Ok(result.ToHttpResponse());
     }
@@ -55,7 +55,7 @@ public class AuthController : BaseController
 
         RegisteredResponse result = await Mediator.Send(registerCommand);
 
-        setRefreshTokenToCookie(result.RefreshToken);
+        SetRefreshTokenToCookie(result.RefreshToken);
 
         return Created(uri: string.Empty, result.AccessToken);
     }
@@ -65,13 +65,13 @@ public class AuthController : BaseController
     {
         RefreshTokenCommand refreshTokenCommand = new()
         {
-            RefreshToken = getRefreshTokenFromCookies(),
+            RefreshToken = GetRefreshTokenFromCookies(),
             IpAddress = GetIpAddress()
         };
 
         RefreshedTokenResponse result = await Mediator.Send(refreshTokenCommand);
 
-        setRefreshTokenToCookie(result.RefreshToken);
+        SetRefreshTokenToCookie(result.RefreshToken);
 
         return Created(uri: string.Empty, result.AccessToken);
     }
@@ -81,7 +81,7 @@ public class AuthController : BaseController
     {
         RevokeTokenCommand revokeTokenCommand = new()
         {
-            Token = refreshToken ?? getRefreshTokenFromCookies(),
+            Token = refreshToken ?? GetRefreshTokenFromCookies(),
             IpAddress = GetIpAddress()
         };
 
@@ -139,12 +139,12 @@ public class AuthController : BaseController
         return Ok();
     }
 
-    private string getRefreshTokenFromCookies()
+    private string GetRefreshTokenFromCookies()
     {
         return Request.Cookies["refreshToken"] ?? throw new ArgumentException("Refresh token is not found in request cookies.");
     }
 
-    private void setRefreshTokenToCookie(RefreshToken refreshToken)
+    private void SetRefreshTokenToCookie(RefreshToken refreshToken)
     {
         CookieOptions cookieOptions = new()
         {
